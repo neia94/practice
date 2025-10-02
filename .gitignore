@@ -14,7 +14,7 @@ dist-ssr
 *.local
 
 # Build output
-docs
+# docs  ← GitHub Pages 배포를 위해 주석 처리
 
 # Editor directories and files
 .vscode/*
