@@ -1,10 +1,15 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../components/Layout";
+import AnimatedPage from "../components/AnimatedPage";
+import SearchBar from "../components/SearchBar";
 import "../App.css";
 
 function Posts() {
+  const [searchQuery, setSearchQuery] = useState("");
+
   // 나중에 실제 포스트 데이터로 대체될 예정
-  const posts = [
+  const allPosts = [
     {
       id: 1,
       title: "Vite + React 프로젝트 가이드",
@@ -33,106 +38,140 @@ function Posts() {
       category: "ai-summaries",
       description: "react-markdown으로 블로그 포스트를 아름답게 렌더링",
     },
+    {
+      id: 5,
+      title: "검색 기능 & 페이지 전환 애니메이션",
+      date: "2024-10-02",
+      category: "ai-summaries",
+      description: "실시간 검색과 Framer Motion으로 부드러운 페이지 전환",
+    },
   ];
 
+  // 검색 필터링
+  const filteredPosts = allPosts.filter((post) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      post.title.toLowerCase().includes(query) ||
+      post.description.toLowerCase().includes(query)
+    );
+  });
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
   return (
-    <Layout>
-      <div className="App">
-        <header className="header">
-          <h1>📝 Posts</h1>
-          <p>블로그 포스트 목록</p>
-        </header>
+    <AnimatedPage>
+      <Layout>
+        <div className="App">
+          <header className="header">
+            <h1>📝 Posts</h1>
+            <p>블로그 포스트 목록</p>
+          </header>
 
-        <main className="main">
-          <section className="posts-list">
-            <h2>전체 포스트</h2>
+          <main className="main">
+            <SearchBar onSearch={handleSearch} />
 
-            {posts.length === 0 ? (
-              <p>아직 작성된 포스트가 없습니다.</p>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                  maxWidth: "800px",
-                  margin: "0 auto",
-                }}
-              >
-                {posts.map((post) => (
-                  <article
-                    key={post.id}
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      padding: "1.5rem",
-                      textAlign: "left",
-                      background: "#1a1a1a",
-                    }}
-                  >
-                    <div
+            <section className="posts-list">
+              <h2>
+                {searchQuery
+                  ? `검색 결과 (${filteredPosts.length}개)`
+                  : `전체 포스트 (${allPosts.length}개)`}
+              </h2>
+
+              {filteredPosts.length === 0 ? (
+                <p>
+                  {searchQuery
+                    ? `"${searchQuery}"에 대한 검색 결과가 없습니다.`
+                    : "아직 작성된 포스트가 없습니다."}
+                </p>
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                    maxWidth: "800px",
+                    margin: "0 auto",
+                  }}
+                >
+                  {filteredPosts.map((post) => (
+                    <article
+                      key={post.id}
                       style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "start",
-                        marginBottom: "0.5rem",
+                        border: "1px solid #ccc",
+                        borderRadius: "8px",
+                        padding: "1.5rem",
+                        textAlign: "left",
+                        background: "#1a1a1a",
                       }}
                     >
-                      <h3 style={{ margin: 0 }}>{post.title}</h3>
-                      <span
+                      <div
                         style={{
-                          fontSize: "0.85rem",
-                          color: "#888",
-                          padding: "0.25rem 0.5rem",
-                          background: "#2a2a2a",
-                          borderRadius: "4px",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "start",
+                          marginBottom: "0.5rem",
                         }}
                       >
-                        {post.category === "my-learning" ? "📖 학습" : "🤖 AI"}
-                      </span>
-                    </div>
-                    <p
-                      style={{
-                        margin: "0.5rem 0",
-                        color: "#aaa",
-                        fontSize: "0.9rem",
-                      }}
-                    >
-                      {post.description}
-                    </p>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        marginTop: "1rem",
-                      }}
-                    >
-                      <span style={{ fontSize: "0.85rem", color: "#666" }}>
-                        {post.date}
-                      </span>
-                      <Link
-                        to={`/posts/${post.id}`}
+                        <h3 style={{ margin: 0 }}>{post.title}</h3>
+                        <span
+                          style={{
+                            fontSize: "0.85rem",
+                            color: "#888",
+                            padding: "0.25rem 0.5rem",
+                            background: "#2a2a2a",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {post.category === "my-learning"
+                            ? "📖 학습"
+                            : "🤖 AI"}
+                        </span>
+                      </div>
+                      <p
                         style={{
-                          padding: "0.5rem 1rem",
-                          background: "#646cff",
-                          color: "white",
-                          textDecoration: "none",
-                          borderRadius: "4px",
+                          margin: "0.5rem 0",
+                          color: "#aaa",
                           fontSize: "0.9rem",
                         }}
                       >
-                        읽기 →
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </section>
-        </main>
-      </div>
-    </Layout>
+                        {post.description}
+                      </p>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginTop: "1rem",
+                        }}
+                      >
+                        <span style={{ fontSize: "0.85rem", color: "#666" }}>
+                          {post.date}
+                        </span>
+                        <Link
+                          to={`/posts/${post.id}`}
+                          style={{
+                            padding: "0.5rem 1rem",
+                            background: "#646cff",
+                            color: "white",
+                            textDecoration: "none",
+                            borderRadius: "4px",
+                            fontSize: "0.9rem",
+                          }}
+                        >
+                          읽기 →
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </section>
+          </main>
+        </div>
+      </Layout>
+    </AnimatedPage>
   );
 }
 
