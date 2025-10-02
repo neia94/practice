@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeHighlight from "rehype-highlight";
 import Layout from "../components/Layout";
+import AnimatedPage from "../components/AnimatedPage";
 import "./PostDetail.css";
 import "highlight.js/styles/github-dark.css";
 
@@ -50,6 +51,14 @@ const postsMetadata: Post[] = [
     category: "ai-summaries",
     description: "react-markdown으로 블로그 포스트를 아름답게 렌더링",
     filename: "markdown-rendering-guide.md",
+  },
+  {
+    id: 5,
+    title: "검색 기능 & 페이지 전환 애니메이션",
+    date: "2024-10-02",
+    category: "ai-summaries",
+    description: "실시간 검색과 Framer Motion으로 부드러운 페이지 전환",
+    filename: "search-and-animation-guide.md",
   },
 ];
 
@@ -102,100 +111,106 @@ function PostDetail() {
 
   if (loading) {
     return (
-      <Layout>
-        <div className="post-detail">
-          <div className="loading">
-            <div className="spinner"></div>
-            <p>포스트를 불러오는 중...</p>
+      <AnimatedPage>
+        <Layout>
+          <div className="post-detail">
+            <div className="loading">
+              <div className="spinner"></div>
+              <p>포스트를 불러오는 중...</p>
+            </div>
           </div>
-        </div>
-      </Layout>
+        </Layout>
+      </AnimatedPage>
     );
   }
 
   if (error || !post) {
     return (
-      <Layout>
-        <div className="post-detail">
-          <div className="error">
-            <h2>😕 {error || "포스트를 찾을 수 없습니다"}</h2>
-            <Link to="/posts" className="back-button">
-              ← 포스트 목록으로
-            </Link>
+      <AnimatedPage>
+        <Layout>
+          <div className="post-detail">
+            <div className="error">
+              <h2>😕 {error || "포스트를 찾을 수 없습니다"}</h2>
+              <Link to="/posts" className="back-button">
+                ← 포스트 목록으로
+              </Link>
+            </div>
           </div>
-        </div>
-      </Layout>
+        </Layout>
+      </AnimatedPage>
     );
   }
 
   return (
-    <Layout>
-      <div className="post-detail">
-        <div className="post-header">
-          <button onClick={() => navigate(-1)} className="back-button">
-            ← 뒤로 가기
-          </button>
+    <AnimatedPage>
+      <Layout>
+        <div className="post-detail">
+          <div className="post-header">
+            <button onClick={() => navigate(-1)} className="back-button">
+              ← 뒤로 가기
+            </button>
 
-          <div className="post-meta">
-            <span
-              className={`category-badge ${
-                post.category === "my-learning" ? "learning" : "ai"
-              }`}
-            >
-              {post.category === "my-learning" ? "📖 학습" : "🤖 AI"}
-            </span>
-            <time className="post-date">{post.date}</time>
+            <div className="post-meta">
+              <span
+                className={`category-badge ${
+                  post.category === "my-learning" ? "learning" : "ai"
+                }`}
+              >
+                {post.category === "my-learning" ? "📖 학습" : "🤖 AI"}
+              </span>
+              <time className="post-date">{post.date}</time>
+            </div>
+
+            <h1 className="post-title">{post.title}</h1>
+            <p className="post-description">{post.description}</p>
           </div>
 
-          <h1 className="post-title">{post.title}</h1>
-          <p className="post-description">{post.description}</p>
-        </div>
+          <article className="markdown-content">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw, rehypeHighlight]}
+              components={{
+                // 코드 블록 커스터마이징
+                code({ node, inline, className, children, ...props }) {
+                  return inline ? (
+                    <code className="inline-code" {...props}>
+                      {children}
+                    </code>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  );
+                },
+                // 링크는 외부 링크면 새 탭에서 열기
+                a({ node, href, children, ...props }) {
+                  const isExternal =
+                    href?.startsWith("http") || href?.startsWith("https");
+                  return (
+                    <a
+                      href={href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noopener noreferrer" : undefined}
+                      {...props}
+                    >
+                      {children}
+                    </a>
+                  );
+                },
+              }}
+            >
+              {content}
+            </ReactMarkdown>
+          </article>
 
-        <article className="markdown-content">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw, rehypeHighlight]}
-            components={{
-              // 코드 블록 커스터마이징
-              code({ node, inline, className, children, ...props }) {
-                return inline ? (
-                  <code className="inline-code" {...props}>
-                    {children}
-                  </code>
-                ) : (
-                  <code className={className} {...props}>
-                    {children}
-                  </code>
-                );
-              },
-              // 링크는 외부 링크면 새 탭에서 열기
-              a({ node, href, children, ...props }) {
-                const isExternal =
-                  href?.startsWith("http") || href?.startsWith("https");
-                return (
-                  <a
-                    href={href}
-                    target={isExternal ? "_blank" : undefined}
-                    rel={isExternal ? "noopener noreferrer" : undefined}
-                    {...props}
-                  >
-                    {children}
-                  </a>
-                );
-              },
-            }}
-          >
-            {content}
-          </ReactMarkdown>
-        </article>
-
-        <div className="post-footer">
-          <Link to="/posts" className="back-to-list">
-            📝 포스트 목록으로 돌아가기
-          </Link>
+          <div className="post-footer">
+            <Link to="/posts" className="back-to-list">
+              📝 포스트 목록으로 돌아가기
+            </Link>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </AnimatedPage>
   );
 }
 
