@@ -1,0 +1,368 @@
+.post-detail {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* 로딩 및 에러 상태 */
+.loading,
+.error {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 1rem;
+  border: 4px solid #333;
+  border-top-color: #646cff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error h2 {
+  margin-bottom: 1.5rem;
+  color: #ff6b6b;
+}
+
+/* 포스트 헤더 */
+.post-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid #333;
+}
+
+.back-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  background: transparent;
+  border: 1px solid #555;
+  color: #aaa;
+  text-decoration: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background: #646cff;
+  border-color: #646cff;
+  color: white;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.category-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.category-badge.learning {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.category-badge.ai {
+  background: rgba(100, 108, 255, 0.15);
+  color: #646cff;
+  border: 1px solid rgba(100, 108, 255, 0.3);
+}
+
+.post-date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.post-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.post-description {
+  font-size: 1.1rem;
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* 마크다운 콘텐츠 스타일 */
+.markdown-content {
+  line-height: 1.8;
+  color: #e0e0e0;
+}
+
+/* 제목들 */
+.markdown-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #333;
+  color: #fff;
+}
+
+.markdown-content h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  color: #fff;
+}
+
+.markdown-content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: #ddd;
+}
+
+.markdown-content h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: #ddd;
+}
+
+/* 문단 */
+.markdown-content p {
+  margin: 1rem 0;
+  line-height: 1.8;
+}
+
+/* 링크 */
+.markdown-content a {
+  color: #646cff;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.markdown-content a:hover {
+  border-bottom-color: #646cff;
+}
+
+/* 리스트 */
+.markdown-content ul,
+.markdown-content ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.markdown-content li {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.markdown-content ul {
+  list-style-type: disc;
+}
+
+.markdown-content ol {
+  list-style-type: decimal;
+}
+
+.markdown-content li::marker {
+  color: #646cff;
+}
+
+/* 인용구 */
+.markdown-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid #646cff;
+  background: rgba(100, 108, 255, 0.05);
+  border-radius: 0 6px 6px 0;
+}
+
+.markdown-content blockquote p {
+  margin: 0.5rem 0;
+}
+
+/* 코드 블록 */
+.markdown-content code {
+  font-family: "Fira Code", "Consolas", "Monaco", monospace;
+  font-size: 0.9em;
+}
+
+.markdown-content .inline-code {
+  padding: 0.2rem 0.4rem;
+  background: rgba(100, 108, 255, 0.15);
+  border: 1px solid rgba(100, 108, 255, 0.3);
+  border-radius: 4px;
+  color: #a5b4fc;
+}
+
+.markdown-content pre {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.markdown-content pre code {
+  display: block;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* 테이블 */
+.markdown-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.markdown-content thead {
+  background: rgba(100, 108, 255, 0.1);
+}
+
+.markdown-content th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 2px solid #646cff;
+}
+
+.markdown-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #333;
+}
+
+.markdown-content tbody tr:hover {
+  background: rgba(100, 108, 255, 0.05);
+}
+
+.markdown-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* 수평선 */
+.markdown-content hr {
+  margin: 2rem 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #333, transparent);
+}
+
+/* 이미지 */
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+/* 강조 */
+.markdown-content strong {
+  font-weight: 600;
+  color: #fff;
+}
+
+.markdown-content em {
+  font-style: italic;
+  color: #ddd;
+}
+
+/* 체크박스 리스트 */
+.markdown-content input[type="checkbox"] {
+  margin-right: 0.5rem;
+  accent-color: #646cff;
+}
+
+/* 포스트 푸터 */
+.post-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid #333;
+  text-align: center;
+}
+
+.back-to-list {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #646cff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.back-to-list:hover {
+  background: #5a5fcf;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.3);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .post-detail {
+    padding: 1rem 0.5rem;
+  }
+
+  .post-title {
+    font-size: 1.75rem;
+  }
+
+  .post-description {
+    font-size: 1rem;
+  }
+
+  .markdown-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .markdown-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .markdown-content h3 {
+    font-size: 1.1rem;
+  }
+
+  .markdown-content pre {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .markdown-content table {
+    font-size: 0.9rem;
+  }
+
+  .markdown-content th,
+  .markdown-content td {
+    padding: 0.5rem;
+  }
+}
