@@ -171,7 +171,10 @@ function PostDetail() {
               rehypePlugins={[rehypeRaw, rehypeHighlight]}
               components={{
                 // 코드 블록 커스터마이징
-                code({ node, inline, className, children, ...props }) {
+                code({ className, children, ...props }: any) {
+                  const match = /language-(\w+)/.exec(className || "");
+                  const inline = !match;
+
                   return inline ? (
                     <code className="inline-code" {...props}>
                       {children}
@@ -183,7 +186,7 @@ function PostDetail() {
                   );
                 },
                 // 링크는 외부 링크면 새 탭에서 열기
-                a({ node, href, children, ...props }) {
+                a({ href, children, ...props }: any) {
                   const isExternal =
                     href?.startsWith("http") || href?.startsWith("https");
                   return (
