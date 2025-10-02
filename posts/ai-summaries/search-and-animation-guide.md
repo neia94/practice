@@ -14,6 +14,7 @@ npm install framer-motion
 ```
 
 **Framer Motion**: React를 위한 프로덕션 레벨 애니메이션 라이브러리
+
 - 선언적 API
 - 제스처 지원
 - 레이아웃 애니메이션
@@ -35,7 +36,10 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-function SearchBar({ onSearch, placeholder = "포스트 검색..." }: SearchBarProps) {
+function SearchBar({
+  onSearch,
+  placeholder = "포스트 검색...",
+}: SearchBarProps) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -83,6 +87,7 @@ useEffect(() => {
 ```
 
 **작동 방식:**
+
 ```
 사용자 입력: "r" → 타이머 시작 (300ms)
 사용자 입력: "re" → 이전 타이머 취소, 새 타이머 시작
@@ -92,6 +97,7 @@ useEffect(() => {
 ```
 
 **장점:**
+
 - 불필요한 검색 요청 감소
 - 성능 최적화
 - 부드러운 사용자 경험
@@ -135,7 +141,7 @@ function Posts() {
   return (
     <Layout>
       <SearchBar onSearch={handleSearch} />
-      
+
       <h2>
         {searchQuery
           ? `검색 결과 (${filteredPosts.length}개)`
@@ -163,6 +169,7 @@ function Posts() {
 3. **부분 일치**: `.includes()`
 
 **개선 가능한 점:**
+
 - 태그로 필터링
 - 카테고리별 필터
 - 정렬 옵션 (날짜, 제목)
@@ -220,10 +227,12 @@ function AnimatedPage({ children }: { children: ReactNode }) {
 **애니메이션 단계:**
 
 1. **initial (초기 상태)**
+
    - opacity: 0 (투명)
    - y: 20 (아래로 20px)
 
 2. **animate (진입 애니메이션)**
+
    - opacity: 1 (불투명)
    - y: 0 (원래 위치)
    - duration: 0.4초
@@ -236,6 +245,7 @@ function AnimatedPage({ children }: { children: ReactNode }) {
    - easing: easeIn (점점 빠르게)
 
 **시각적 효과:**
+
 ```
 진입: 아래에서 위로 페이드 인 ↑
 퇴장: 위로 사라지며 페이드 아웃 ↑
@@ -269,18 +279,22 @@ function App() {
 **핵심 포인트:**
 
 #### `AnimatePresence`
+
 - exit 애니메이션을 가능하게 함
 - 컴포넌트가 DOM에서 제거되기 전에 애니메이션 실행
 
 #### `mode="wait"`
+
 - 현재 페이지가 완전히 퇴장한 후 새 페이지 진입
 - 페이지 간 겹침 방지
 
 #### `key={location.pathname}`
+
 - URL이 변경되면 새로운 컴포넌트로 인식
 - 애니메이션 트리거
 
 #### `location={location}`
+
 - React Router와 Framer Motion 동기화
 
 ---
@@ -291,15 +305,14 @@ function App() {
 function Home() {
   return (
     <AnimatedPage>
-      <Layout>
-        {/* 페이지 내용 */}
-      </Layout>
+      <Layout>{/* 페이지 내용 */}</Layout>
     </AnimatedPage>
   );
 }
 ```
 
 **모든 페이지에 적용:**
+
 - Home.tsx
 - About.tsx
 - Posts.tsx
@@ -366,7 +379,7 @@ const itemVariants = {
       {/* 포스트 카드 */}
     </motion.article>
   ))}
-</motion.div>
+</motion.div>;
 ```
 
 ### 3. 호버 애니메이션
@@ -406,6 +419,7 @@ const itemVariants = {
 ```
 
 **특징:**
+
 - 둥근 모서리 (12px)
 - 포커스 시 파란 테두리와 그림자
 - 아이콘과 클리어 버튼 포함
@@ -428,6 +442,7 @@ useEffect(() => {
 ```
 
 **효과:**
+
 - 사용자가 타이핑을 멈춘 후에만 검색 실행
 - 불필요한 렌더링 감소
 - 성능 향상
@@ -449,12 +464,14 @@ const filteredPosts = useMemo(() => {
 ```
 
 **효과:**
+
 - searchQuery나 allPosts가 변경될 때만 재계산
 - 불필요한 필터링 방지
 
 ### 3. 애니메이션 성능
 
 Framer Motion은 자동으로 최적화:
+
 - GPU 가속 (transform, opacity 사용)
 - will-change CSS 속성 자동 적용
 - 60fps 유지
@@ -480,11 +497,13 @@ Framer Motion은 자동으로 최적화:
 ### 2. 클리어 버튼
 
 ```typescript
-{query && (
-  <button className="clear-button" onClick={handleClear}>
-    ✕
-  </button>
-)}
+{
+  query && (
+    <button className="clear-button" onClick={handleClear}>
+      ✕
+    </button>
+  );
+}
 ```
 
 - 검색어가 있을 때만 표시
@@ -493,7 +512,7 @@ Framer Motion은 자동으로 최적화:
 ### 3. 부드러운 페이지 전환
 
 ```typescript
-mode="wait" // 현재 페이지가 완전히 사라진 후 새 페이지 진입
+mode = "wait"; // 현재 페이지가 완전히 사라진 후 새 페이지 진입
 ```
 
 - 페이지 간 깜빡임 없음
@@ -518,6 +537,7 @@ mode="wait" // 현재 페이지가 완전히 사라진 후 새 페이지 진입
 ```
 
 **개선된 점:**
+
 - ✅ 빠른 포스트 검색
 - ✅ 실시간 결과 업데이트
 - ✅ 부드러운 페이지 전환
@@ -530,15 +550,18 @@ mode="wait" // 현재 페이지가 완전히 사라진 후 새 페이지 진입
 ### 문제 1: 애니메이션이 작동하지 않음
 
 **증상:**
+
 ```
 페이지 전환 시 애니메이션이 보이지 않음
 ```
 
 **원인:**
+
 - AnimatePresence에 key가 없음
 - mode 설정 누락
 
 **해결:**
+
 ```typescript
 <AnimatePresence mode="wait">
   <Routes location={location} key={location.pathname}>
@@ -547,14 +570,17 @@ mode="wait" // 현재 페이지가 완전히 사라진 후 새 페이지 진입
 ### 문제 2: 검색 시 너무 많은 렌더링
 
 **증상:**
+
 ```
 타이핑할 때마다 컴포넌트가 재렌더링됨
 ```
 
 **원인:**
+
 - 디바운싱이 없음
 
 **해결:**
+
 ```typescript
 useEffect(() => {
   const timer = setTimeout(() => {
@@ -567,6 +593,7 @@ useEffect(() => {
 ### 문제 3: 애니메이션이 너무 느림/빠름
 
 **해결:**
+
 ```typescript
 transition: {
   duration: 0.4, // 숫자 조정 (0.2 ~ 0.6 권장)
@@ -592,7 +619,7 @@ transition: {
 ```typescript
 // 검색어 하이라이트 표시
 const highlightText = (text: string, query: string) => {
-  const parts = text.split(new RegExp(`(${query})`, 'gi'));
+  const parts = text.split(new RegExp(`(${query})`, "gi"));
   return parts.map((part, i) =>
     part.toLowerCase() === query.toLowerCase() ? (
       <mark key={i}>{part}</mark>
@@ -610,14 +637,17 @@ const highlightText = (text: string, query: string) => {
 const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
 useEffect(() => {
-  const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+  const history = JSON.parse(localStorage.getItem("searchHistory") || "[]");
   setSearchHistory(history);
 }, []);
 
 const addToHistory = (query: string) => {
-  const updated = [query, ...searchHistory.filter(q => q !== query)].slice(0, 5);
+  const updated = [query, ...searchHistory.filter((q) => q !== query)].slice(
+    0,
+    5
+  );
   setSearchHistory(updated);
-  localStorage.setItem('searchHistory', JSON.stringify(updated));
+  localStorage.setItem("searchHistory", JSON.stringify(updated));
 };
 ```
 
@@ -625,11 +655,15 @@ const addToHistory = (query: string) => {
 
 ```typescript
 // 사용자가 애니메이션 끄기 가능
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const prefersReducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
 
 const pageVariants = prefersReducedMotion.matches
   ? {} // 애니메이션 없음
-  : { /* 애니메이션 설정 */ };
+  : {
+      /* 애니메이션 설정 */
+    };
 ```
 
 ---
@@ -647,16 +681,19 @@ const pageVariants = prefersReducedMotion.matches
 검색 기능과 페이지 전환 애니메이션을 구현하여 다음을 달성했습니다:
 
 ✅ **검색 기능**
+
 - 실시간 필터링
 - 디바운싱으로 최적화
 - 직관적인 UI
 
 ✅ **페이지 전환 애니메이션**
+
 - 부드러운 페이드 인/아웃
 - Framer Motion 활용
 - 60fps 성능 유지
 
 ✅ **향상된 UX**
+
 - 빠른 포스트 검색
 - 자연스러운 페이지 전환
 - 현대적인 느낌
@@ -667,4 +704,3 @@ const pageVariants = prefersReducedMotion.matches
 
 **작성일:** 2024-10-02  
 **버전:** React 19, Framer Motion 11, Vite 7
-
